@@ -1,0 +1,202 @@
+=== POST monstruo 1 (201) ===
++ curl -i -X POST http://127.0.0.1:8000/monsters -H 'Content-Type: application/json' -d '{"name":"Slime","level":1,"family":"Slime","description":"A cute blue slime.","habitat":["Plains"],"xp":5,"gold":3,"image_url":"http://example.com/slime.png","items":["Medicinal Herb"]}'
+HTTP/1.1 201 Created
+date: Mon, 05 Oct 2026 03:26:21 GMT
+server: uvicorn
+content-length: 199
+content-type: application/json
+
+{"id_number":3,"name":"Slime","level":1,"family":"Slime","description":"A cute blue slime.","habitat":["Plains"],"xp":5,"gold":3,"image_url":"http://example.com/slime.png","items":["Medicinal Herb"]}
+
+=== POST monstruo 2, mucho XP (201) ===
++ curl -i -X POST http://127.0.0.1:8000/monsters -H 'Content-Type: application/json' -d '{"name":"Metal King","level":1,"family":"Slime","description":"Gives a lot of XP.","habitat":["Caves"],"xp":2000,"gold":500,"image_url":"http://example.com/metalking.png","items":[]}'
+HTTP/1.1 201 Created
+date: Mon, 05 Oct 2026 03:26:21 GMT
+server: uvicorn
+content-length: 196
+content-type: application/json
+
+{"id_number":4,"name":"Metal King","level":1,"family":"Slime","description":"Gives a lot of XP.","habitat":["Caves"],"xp":2000,"gold":500,"image_url":"http://example.com/metalking.png","items":[]}
+
+=== GET todos los monstruos (200) ===
++ curl -i http://127.0.0.1:8000/monsters
+HTTP/1.1 200 OK
+date: Mon, 05 Oct 2026 03:26:21 GMT
+server: uvicorn
+content-length: 595
+content-type: application/json
+
+[{"id_number":2,"name":"Metal King","level":1,"family":"Slime","description":"Gives a lot of XP.","habitat":["Caves"],"xp":2000,"gold":500,"image_url":"http://example.com/metalking.png","items":[]},{"id_number":3,"name":"Slime","level":1,"family":"Slime","description":"A cute blue slime.","habitat":["Plains"],"xp":5,"gold":3,"image_url":"http://example.com/slime.png","items":["Medicinal Herb"]},{"id_number":4,"name":"Metal King","level":1,"family":"Slime","description":"Gives a lot of XP.","habitat":["Caves"],"xp":2000,"gold":500,"image_url":"http://example.com/metalking.png","items":[]}]
+
+=== GET un monstruo por id (200) ===
++ curl -i http://127.0.0.1:8000/monsters/1
+HTTP/1.1 404 Not Found
+date: Mon, 05 Oct 2026 03:26:21 GMT
+server: uvicorn
+content-length: 30
+content-type: application/json
+
+{"detail":"Monster not found"}
+
+=== PUT actualizar monstruo 1 (200) ===
++ curl -i -X PUT http://127.0.0.1:8000/monsters/1 -H 'Content-Type: application/json' -d '{"name":"Big Slime","level":2,"family":"Slime","description":"A bigger slime.","habitat":["Plains","Forest"],"xp":8,"gold":5,"image_url":"http://example.com/slime.png","items":["Medicinal Herb"]}'
+HTTP/1.1 404 Not Found
+date: Mon, 05 Oct 2026 03:26:21 GMT
+server: uvicorn
+content-length: 30
+content-type: application/json
+
+{"detail":"Monster not found"}
+
+=== POST registrar jugador Mage ===
++ curl -i -X POST http://127.0.0.1:8000/player/register -H 'Content-Type: application/json' -d '{"name":"Papu","CharacterClass_Id":4}'
+HTTP/1.1 400 Bad Request
+date: Mon, 05 Oct 2026 03:26:21 GMT
+server: uvicorn
+content-length: 38
+content-type: application/json
+
+{"detail":"Player already registered"}
+
+=== GET detalles del jugador ===
++ curl -i http://127.0.0.1:8000/player/details
+HTTP/1.1 200 OK
+date: Mon, 05 Oct 2026 03:26:21 GMT
+server: uvicorn
+content-length: 3634
+content-type: application/json
+
+{"name":"Papu","level":1,"xp":0,"class_type":{"id_number":2,"class_name":"Warrior","description":"A powerful physical class focused on strength, defense, and heavy weapons.","spells":[],"abilities":[{"id_number":1,"name":"Cop Out","unlock_level":1,"mana_cost":2,"description":"Redirects attacks toward an enemy or an ally."},{"id_number":2,"name":"Whipping Boy","unlock_level":3,"mana_cost":1,"description":"Redirects attacks targeting one ally toward the user."},{"id_number":3,"name":"Mercurial Thrust","unlock_level":9,"mana_cost":3,"description":"Attacks one enemy before anyone else can act."},{"id_number":4,"name":"Double-Edged Slash","unlock_level":16,"mana_cost":6,"description":"Deals increased damage at the cost of some health."},{"id_number":5,"name":"Pressure Pointer","unlock_level":21,"mana_cost":4,"description":"Attempts to instantly defeat one enemy."},{"id_number":6,"name":"Forbearance","unlock_level":25,"mana_cost":4,"description":"Redirects attacks targeting all allies toward the user."},{"id_number":7,"name":"Sword Dance","unlock_level":37,"mana_cost":10,"description":"Attacks random enemies up to four times."},{"id_number":8,"name":"Metal Slash","unlock_level":39,"mana_cost":6,"description":"Performs a physical attack that always hits metal monsters."},{"id_number":9,"name":"Multislice","unlock_level":48,"mana_cost":8,"description":"Performs a physical attack against all enemies."},{"id_number":10,"name":"Cutting Edge","unlock_level":48,"mana_cost":14,"description":"Performs a powerful physical attack against one enemy."}]},"spells":[{"id_number":1,"name":"Frizz","unlock_level":1,"mana_cost":2,"description":"Deals fire damage to one enemy."},{"id_number":2,"name":"Buff","unlock_level":2,"mana_cost":3,"description":"Increases one ally's defense."},{"id_number":3,"name":"Crack","unlock_level":5,"mana_cost":3,"description":"Deals ice damage to one enemy."},{"id_number":4,"name":"Sizz","unlock_level":7,"mana_cost":4,"description":"Deals fire damage to a group of enemies."},{"id_number":5,"name":"Kabuff","unlock_level":8,"mana_cost":5,"description":"Increases the defense of the entire party."},{"id_number":6,"name":"Evac","unlock_level":9,"mana_cost":0,"description":"Allows the party to escape from a dungeon."},{"id_number":7,"name":"Deceleratle","unlock_level":10,"mana_cost":3,"description":"Decreases the agility of a group of enemies."},{"id_number":8,"name":"Bang","unlock_level":11,"mana_cost":5,"description":"Deals explosive damage to all enemies."},{"id_number":9,"name":"Zoom","unlock_level":12,"mana_cost":0,"description":"Teleports the party to a previously visited town."},{"id_number":10,"name":"Drain Magic","unlock_level":12,"mana_cost":0,"description":"Steals MP from one enemy."},{"id_number":11,"name":"Sizzle","unlock_level":13,"mana_cost":6,"description":"Deals fire damage to a group of enemies."},{"id_number":12,"name":"Defizzle","unlock_level":14,"mana_cost":4,"description":"Cures the Fizzle effect."},{"id_number":13,"name":"Peep","unlock_level":15,"mana_cost":3,"description":"Reveals the contents of a treasure chest."},{"id_number":14,"name":"Frizzle","unlock_level":16,"mana_cost":6,"description":"Deals heavy fire damage to one enemy."},{"id_number":15,"name":"Safe Passage","unlock_level":19,"mana_cost":2,"description":"Protects the party from damaging floor tiles."},{"id_number":16,"name":"Crackle","unlock_level":20,"mana_cost":6,"description":"Deals ice damage to a group of enemies."}],"abilities":[{"id_number":1,"name":"Cop Out","unlock_level":1,"mana_cost":2,"description":"Redirects attacks toward an enemy or an ally."}],"defeated_monsters":2}
+
+=== GET hechizos ===
++ curl -i http://127.0.0.1:8000/player/spells
+HTTP/1.1 200 OK
+date: Mon, 05 Oct 2026 03:26:21 GMT
+server: uvicorn
+content-length: 1900
+content-type: application/json
+
+[{"id_number":1,"name":"Frizz","unlock_level":1,"mana_cost":2,"description":"Deals fire damage to one enemy."},{"id_number":2,"name":"Buff","unlock_level":2,"mana_cost":3,"description":"Increases one ally's defense."},{"id_number":3,"name":"Crack","unlock_level":5,"mana_cost":3,"description":"Deals ice damage to one enemy."},{"id_number":4,"name":"Sizz","unlock_level":7,"mana_cost":4,"description":"Deals fire damage to a group of enemies."},{"id_number":5,"name":"Kabuff","unlock_level":8,"mana_cost":5,"description":"Increases the defense of the entire party."},{"id_number":6,"name":"Evac","unlock_level":9,"mana_cost":0,"description":"Allows the party to escape from a dungeon."},{"id_number":7,"name":"Deceleratle","unlock_level":10,"mana_cost":3,"description":"Decreases the agility of a group of enemies."},{"id_number":8,"name":"Bang","unlock_level":11,"mana_cost":5,"description":"Deals explosive damage to all enemies."},{"id_number":9,"name":"Zoom","unlock_level":12,"mana_cost":0,"description":"Teleports the party to a previously visited town."},{"id_number":10,"name":"Drain Magic","unlock_level":12,"mana_cost":0,"description":"Steals MP from one enemy."},{"id_number":11,"name":"Sizzle","unlock_level":13,"mana_cost":6,"description":"Deals fire damage to a group of enemies."},{"id_number":12,"name":"Defizzle","unlock_level":14,"mana_cost":4,"description":"Cures the Fizzle effect."},{"id_number":13,"name":"Peep","unlock_level":15,"mana_cost":3,"description":"Reveals the contents of a treasure chest."},{"id_number":14,"name":"Frizzle","unlock_level":16,"mana_cost":6,"description":"Deals heavy fire damage to one enemy."},{"id_number":15,"name":"Safe Passage","unlock_level":19,"mana_cost":2,"description":"Protects the party from damaging floor tiles."},{"id_number":16,"name":"Crackle","unlock_level":20,"mana_cost":6,"description":"Deals ice damage to a group of enemies."}]
+
+=== GET habilidades ===
++ curl -i http://127.0.0.1:8000/player/abilities
+HTTP/1.1 200 OK
+date: Mon, 05 Oct 2026 03:26:21 GMT
+server: uvicorn
+content-length: 127
+content-type: application/json
+
+[{"id_number":1,"name":"Cop Out","unlock_level":1,"mana_cost":2,"description":"Redirects attacks toward an enemy or an ally."}]
+
+=== POST batalla contra monstruo 1 (Victory o Defeat, es aleatorio) ===
++ curl -i -X POST http://127.0.0.1:8000/player/battle/1
+HTTP/1.1 404 Not Found
+date: Mon, 05 Oct 2026 03:26:21 GMT
+server: uvicorn
+content-length: 30
+content-type: application/json
+
+{"detail":"Monster not found"}
+
+=== ERROR: cambiar de clase antes del nivel 20 ===
++ curl -i -X PUT http://127.0.0.1:8000/player/class/2
+HTTP/1.1 400 Bad Request
+date: Mon, 05 Oct 2026 03:26:21 GMT
+server: uvicorn
+content-length: 52
+content-type: application/json
+
+{"detail":"You must reach level 20 to change class"}
+
+=== Subiendo de nivel: batallas contra el monstruo 2 hasta ganar ===
+Victoria en el intento 3
+
+=== GET detalles (deberia ser nivel 20 con mas hechizos) ===
++ curl -i http://127.0.0.1:8000/player/details
+HTTP/1.1 200 OK
+date: Mon, 05 Oct 2026 03:26:21 GMT
+server: uvicorn
+content-length: 4054
+content-type: application/json
+
+{"name":"Papu","level":20,"xp":100,"class_type":{"id_number":2,"class_name":"Warrior","description":"A powerful physical class focused on strength, defense, and heavy weapons.","spells":[],"abilities":[{"id_number":1,"name":"Cop Out","unlock_level":1,"mana_cost":2,"description":"Redirects attacks toward an enemy or an ally."},{"id_number":2,"name":"Whipping Boy","unlock_level":3,"mana_cost":1,"description":"Redirects attacks targeting one ally toward the user."},{"id_number":3,"name":"Mercurial Thrust","unlock_level":9,"mana_cost":3,"description":"Attacks one enemy before anyone else can act."},{"id_number":4,"name":"Double-Edged Slash","unlock_level":16,"mana_cost":6,"description":"Deals increased damage at the cost of some health."},{"id_number":5,"name":"Pressure Pointer","unlock_level":21,"mana_cost":4,"description":"Attempts to instantly defeat one enemy."},{"id_number":6,"name":"Forbearance","unlock_level":25,"mana_cost":4,"description":"Redirects attacks targeting all allies toward the user."},{"id_number":7,"name":"Sword Dance","unlock_level":37,"mana_cost":10,"description":"Attacks random enemies up to four times."},{"id_number":8,"name":"Metal Slash","unlock_level":39,"mana_cost":6,"description":"Performs a physical attack that always hits metal monsters."},{"id_number":9,"name":"Multislice","unlock_level":48,"mana_cost":8,"description":"Performs a physical attack against all enemies."},{"id_number":10,"name":"Cutting Edge","unlock_level":48,"mana_cost":14,"description":"Performs a powerful physical attack against one enemy."}]},"spells":[{"id_number":1,"name":"Frizz","unlock_level":1,"mana_cost":2,"description":"Deals fire damage to one enemy."},{"id_number":2,"name":"Buff","unlock_level":2,"mana_cost":3,"description":"Increases one ally's defense."},{"id_number":3,"name":"Crack","unlock_level":5,"mana_cost":3,"description":"Deals ice damage to one enemy."},{"id_number":4,"name":"Sizz","unlock_level":7,"mana_cost":4,"description":"Deals fire damage to a group of enemies."},{"id_number":5,"name":"Kabuff","unlock_level":8,"mana_cost":5,"description":"Increases the defense of the entire party."},{"id_number":6,"name":"Evac","unlock_level":9,"mana_cost":0,"description":"Allows the party to escape from a dungeon."},{"id_number":7,"name":"Deceleratle","unlock_level":10,"mana_cost":3,"description":"Decreases the agility of a group of enemies."},{"id_number":8,"name":"Bang","unlock_level":11,"mana_cost":5,"description":"Deals explosive damage to all enemies."},{"id_number":9,"name":"Zoom","unlock_level":12,"mana_cost":0,"description":"Teleports the party to a previously visited town."},{"id_number":10,"name":"Drain Magic","unlock_level":12,"mana_cost":0,"description":"Steals MP from one enemy."},{"id_number":11,"name":"Sizzle","unlock_level":13,"mana_cost":6,"description":"Deals fire damage to a group of enemies."},{"id_number":12,"name":"Defizzle","unlock_level":14,"mana_cost":4,"description":"Cures the Fizzle effect."},{"id_number":13,"name":"Peep","unlock_level":15,"mana_cost":3,"description":"Reveals the contents of a treasure chest."},{"id_number":14,"name":"Frizzle","unlock_level":16,"mana_cost":6,"description":"Deals heavy fire damage to one enemy."},{"id_number":15,"name":"Safe Passage","unlock_level":19,"mana_cost":2,"description":"Protects the party from damaging floor tiles."},{"id_number":16,"name":"Crackle","unlock_level":20,"mana_cost":6,"description":"Deals ice damage to a group of enemies."}],"abilities":[{"id_number":1,"name":"Cop Out","unlock_level":1,"mana_cost":2,"description":"Redirects attacks toward an enemy or an ally."},{"id_number":2,"name":"Whipping Boy","unlock_level":3,"mana_cost":1,"description":"Redirects attacks targeting one ally toward the user."},{"id_number":3,"name":"Mercurial Thrust","unlock_level":9,"mana_cost":3,"description":"Attacks one enemy before anyone else can act."},{"id_number":4,"name":"Double-Edged Slash","unlock_level":16,"mana_cost":6,"description":"Deals increased damage at the cost of some health."}],"defeated_monsters":3}
+
+=== PUT cambiar a Warrior (vuelve a nivel 1) ===
++ curl -i -X PUT http://127.0.0.1:8000/player/class/2
+HTTP/1.1 200 OK
+date: Mon, 05 Oct 2026 03:26:21 GMT
+server: uvicorn
+content-length: 4051
+content-type: application/json
+
+{"name":"Papu","level":1,"xp":0,"class_type":{"id_number":2,"class_name":"Warrior","description":"A powerful physical class focused on strength, defense, and heavy weapons.","spells":[],"abilities":[{"id_number":1,"name":"Cop Out","unlock_level":1,"mana_cost":2,"description":"Redirects attacks toward an enemy or an ally."},{"id_number":2,"name":"Whipping Boy","unlock_level":3,"mana_cost":1,"description":"Redirects attacks targeting one ally toward the user."},{"id_number":3,"name":"Mercurial Thrust","unlock_level":9,"mana_cost":3,"description":"Attacks one enemy before anyone else can act."},{"id_number":4,"name":"Double-Edged Slash","unlock_level":16,"mana_cost":6,"description":"Deals increased damage at the cost of some health."},{"id_number":5,"name":"Pressure Pointer","unlock_level":21,"mana_cost":4,"description":"Attempts to instantly defeat one enemy."},{"id_number":6,"name":"Forbearance","unlock_level":25,"mana_cost":4,"description":"Redirects attacks targeting all allies toward the user."},{"id_number":7,"name":"Sword Dance","unlock_level":37,"mana_cost":10,"description":"Attacks random enemies up to four times."},{"id_number":8,"name":"Metal Slash","unlock_level":39,"mana_cost":6,"description":"Performs a physical attack that always hits metal monsters."},{"id_number":9,"name":"Multislice","unlock_level":48,"mana_cost":8,"description":"Performs a physical attack against all enemies."},{"id_number":10,"name":"Cutting Edge","unlock_level":48,"mana_cost":14,"description":"Performs a powerful physical attack against one enemy."}]},"spells":[{"id_number":1,"name":"Frizz","unlock_level":1,"mana_cost":2,"description":"Deals fire damage to one enemy."},{"id_number":2,"name":"Buff","unlock_level":2,"mana_cost":3,"description":"Increases one ally's defense."},{"id_number":3,"name":"Crack","unlock_level":5,"mana_cost":3,"description":"Deals ice damage to one enemy."},{"id_number":4,"name":"Sizz","unlock_level":7,"mana_cost":4,"description":"Deals fire damage to a group of enemies."},{"id_number":5,"name":"Kabuff","unlock_level":8,"mana_cost":5,"description":"Increases the defense of the entire party."},{"id_number":6,"name":"Evac","unlock_level":9,"mana_cost":0,"description":"Allows the party to escape from a dungeon."},{"id_number":7,"name":"Deceleratle","unlock_level":10,"mana_cost":3,"description":"Decreases the agility of a group of enemies."},{"id_number":8,"name":"Bang","unlock_level":11,"mana_cost":5,"description":"Deals explosive damage to all enemies."},{"id_number":9,"name":"Zoom","unlock_level":12,"mana_cost":0,"description":"Teleports the party to a previously visited town."},{"id_number":10,"name":"Drain Magic","unlock_level":12,"mana_cost":0,"description":"Steals MP from one enemy."},{"id_number":11,"name":"Sizzle","unlock_level":13,"mana_cost":6,"description":"Deals fire damage to a group of enemies."},{"id_number":12,"name":"Defizzle","unlock_level":14,"mana_cost":4,"description":"Cures the Fizzle effect."},{"id_number":13,"name":"Peep","unlock_level":15,"mana_cost":3,"description":"Reveals the contents of a treasure chest."},{"id_number":14,"name":"Frizzle","unlock_level":16,"mana_cost":6,"description":"Deals heavy fire damage to one enemy."},{"id_number":15,"name":"Safe Passage","unlock_level":19,"mana_cost":2,"description":"Protects the party from damaging floor tiles."},{"id_number":16,"name":"Crackle","unlock_level":20,"mana_cost":6,"description":"Deals ice damage to a group of enemies."}],"abilities":[{"id_number":1,"name":"Cop Out","unlock_level":1,"mana_cost":2,"description":"Redirects attacks toward an enemy or an ally."},{"id_number":2,"name":"Whipping Boy","unlock_level":3,"mana_cost":1,"description":"Redirects attacks targeting one ally toward the user."},{"id_number":3,"name":"Mercurial Thrust","unlock_level":9,"mana_cost":3,"description":"Attacks one enemy before anyone else can act."},{"id_number":4,"name":"Double-Edged Slash","unlock_level":16,"mana_cost":6,"description":"Deals increased damage at the cost of some health."}],"defeated_monsters":3}
+
+=== GET hechizos (conserva los del Mage) ===
++ curl -i http://127.0.0.1:8000/player/spells
+HTTP/1.1 200 OK
+date: Mon, 05 Oct 2026 03:26:21 GMT
+server: uvicorn
+content-length: 1900
+content-type: application/json
+
+[{"id_number":1,"name":"Frizz","unlock_level":1,"mana_cost":2,"description":"Deals fire damage to one enemy."},{"id_number":2,"name":"Buff","unlock_level":2,"mana_cost":3,"description":"Increases one ally's defense."},{"id_number":3,"name":"Crack","unlock_level":5,"mana_cost":3,"description":"Deals ice damage to one enemy."},{"id_number":4,"name":"Sizz","unlock_level":7,"mana_cost":4,"description":"Deals fire damage to a group of enemies."},{"id_number":5,"name":"Kabuff","unlock_level":8,"mana_cost":5,"description":"Increases the defense of the entire party."},{"id_number":6,"name":"Evac","unlock_level":9,"mana_cost":0,"description":"Allows the party to escape from a dungeon."},{"id_number":7,"name":"Deceleratle","unlock_level":10,"mana_cost":3,"description":"Decreases the agility of a group of enemies."},{"id_number":8,"name":"Bang","unlock_level":11,"mana_cost":5,"description":"Deals explosive damage to all enemies."},{"id_number":9,"name":"Zoom","unlock_level":12,"mana_cost":0,"description":"Teleports the party to a previously visited town."},{"id_number":10,"name":"Drain Magic","unlock_level":12,"mana_cost":0,"description":"Steals MP from one enemy."},{"id_number":11,"name":"Sizzle","unlock_level":13,"mana_cost":6,"description":"Deals fire damage to a group of enemies."},{"id_number":12,"name":"Defizzle","unlock_level":14,"mana_cost":4,"description":"Cures the Fizzle effect."},{"id_number":13,"name":"Peep","unlock_level":15,"mana_cost":3,"description":"Reveals the contents of a treasure chest."},{"id_number":14,"name":"Frizzle","unlock_level":16,"mana_cost":6,"description":"Deals heavy fire damage to one enemy."},{"id_number":15,"name":"Safe Passage","unlock_level":19,"mana_cost":2,"description":"Protects the party from damaging floor tiles."},{"id_number":16,"name":"Crackle","unlock_level":20,"mana_cost":6,"description":"Deals ice damage to a group of enemies."}]
+
+=== GET habilidades (ahora con Cop Out) ===
++ curl -i http://127.0.0.1:8000/player/abilities
+HTTP/1.1 200 OK
+date: Mon, 05 Oct 2026 03:26:21 GMT
+server: uvicorn
+content-length: 544
+content-type: application/json
+
+[{"id_number":1,"name":"Cop Out","unlock_level":1,"mana_cost":2,"description":"Redirects attacks toward an enemy or an ally."},{"id_number":2,"name":"Whipping Boy","unlock_level":3,"mana_cost":1,"description":"Redirects attacks targeting one ally toward the user."},{"id_number":3,"name":"Mercurial Thrust","unlock_level":9,"mana_cost":3,"description":"Attacks one enemy before anyone else can act."},{"id_number":4,"name":"Double-Edged Slash","unlock_level":16,"mana_cost":6,"description":"Deals increased damage at the cost of some health."}]
+
+=== ERROR: registrar otra vez ===
++ curl -i -X POST http://127.0.0.1:8000/player/register -H 'Content-Type: application/json' -d '{"name":"Otro","CharacterClass_Id":1}'
+HTTP/1.1 400 Bad Request
+date: Mon, 05 Oct 2026 03:26:21 GMT
+server: uvicorn
+content-length: 38
+content-type: application/json
+
+{"detail":"Player already registered"}
+
+=== DELETE monstruo 1 ===
++ curl -i -X DELETE http://127.0.0.1:8000/monsters/1
+HTTP/1.1 404 Not Found
+date: Mon, 05 Oct 2026 03:26:21 GMT
+server: uvicorn
+content-length: 30
+content-type: application/json
+
+{"detail":"Monster not found"}
+
+=== ERROR 404: consultar el monstruo eliminado ===
++ curl -i http://127.0.0.1:8000/monsters/1
+HTTP/1.1 404 Not Found
+date: Mon, 05 Oct 2026 03:26:21 GMT
+server: uvicorn
+content-length: 30
+content-type: application/json
+
+{"detail":"Monster not found"}
+
+=== ERROR 404: id que nunca existio ===
++ curl -i http://127.0.0.1:8000/monsters/999
+HTTP/1.1 404 Not Found
+date: Mon, 05 Oct 2026 03:26:21 GMT
+server: uvicorn
+content-length: 30
+content-type: application/json
+
+{"detail":"Monster not found"}
+
+=== ERROR 422: body invalido ===
++ curl -i -X POST http://127.0.0.1:8000/monsters -H 'Content-Type: application/json' -d '{"name":"Roto"}'
+HTTP/1.1 422 Unprocessable Content
+date: Mon, 05 Oct 2026 03:26:21 GMT
+server: uvicorn
+content-length: 733
+content-type: application/json
+
+{"detail":[{"type":"missing","loc":["body","level"],"msg":"Field required","input":{"name":"Roto"}},{"type":"missing","loc":["body","family"],"msg":"Field required","input":{"name":"Roto"}},{"type":"missing","loc":["body","description"],"msg":"Field required","input":{"name":"Roto"}},{"type":"missing","loc":["body","habitat"],"msg":"Field required","input":{"name":"Roto"}},{"type":"missing","loc":["body","xp"],"msg":"Field required","input":{"name":"Roto"}},{"type":"missing","loc":["body","gold"],"msg":"Field required","input":{"name":"Roto"}},{"type":"missing","loc":["body","image_url"],"msg":"Field required","input":{"name":"Roto"}},{"type":"missing","loc":["body","items"],"msg":"Field required","input":{"name":"Roto"}}]}
